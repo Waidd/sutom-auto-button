@@ -14,7 +14,9 @@ export class Grid {
   public firstLetter: string;
 
   public get lines(): Element[] {
-    return Array.from(document.querySelector('#grille > table:nth-child(1)').children);
+    const grid = document.querySelector("#grille > table:nth-child(1)");
+    if (!grid) throw new Error("Grid is not loaded");
+    return Array.from(grid.children);
   }
 
   public constructor() {
@@ -23,10 +25,10 @@ export class Grid {
   }
 
   public getCurrentLine(): number {
-    return this.lines.filter((line) => line.children[0].classList.contains('resultat')).length;
+    return this.lines.filter((line) => line.children[0].classList.contains("resultat")).length;
   }
 
-  public getLineResult(index: number): LineResult | undefined {
+  public getLineResult(index: number): LineResult {
     return Array.from(this.lines[index].children).map((letterElement) => ({
       letter: letterElement.innerHTML,
       state: this.getLetterState(letterElement),
@@ -34,8 +36,8 @@ export class Grid {
   }
 
   private getLetterState(letterElement: Element): LineResultState {
-    if (letterElement.classList.contains('bien-place')) return LineResultState["🟥"];
-    if (letterElement.classList.contains('mal-place')) return LineResultState["🟡"];
+    if (letterElement.classList.contains("bien-place")) return LineResultState["🟥"];
+    if (letterElement.classList.contains("mal-place")) return LineResultState["🟡"];
     return LineResultState["🟦"];
   }
 }

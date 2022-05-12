@@ -2,13 +2,17 @@ export class Keyboard {
   private keys: Record<string, HTMLElement> = {};
 
   public constructor() {
+    const line1 = document.querySelector("div.input-ligne:nth-child(1)");
+    const line2 = document.querySelector("div.input-ligne:nth-child(2)");
+    const line3 = document.querySelector("div.input-ligne:nth-child(3)");
+    if (!line1 || !line2 || !line3) throw new Error("Keyboard is not loaded");
     const lettersElements = [
-      ...Array.from(document.querySelector('div.input-ligne:nth-child(1)').children),
-      ...Array.from(document.querySelector('div.input-ligne:nth-child(2)').children),
-      ...Array.from(document.querySelector('div.input-ligne:nth-child(3)').children),
+      ...Array.from(line1.children),
+      ...Array.from(line2.children),
+      ...Array.from(line3.children),
     ];
     lettersElements.forEach((element) => {
-      const lettre = element.getAttribute('data-lettre');
+      const lettre = element.getAttribute("data-lettre");
       if (!lettre) return;
       this.keys[lettre] = element as HTMLElement;
     });
@@ -28,6 +32,6 @@ export class Keyboard {
   }
 
   private pressEnter(): void {
-    this.keys['_entree'].click();
+    this.keys["_entree"].click();
   }
 }

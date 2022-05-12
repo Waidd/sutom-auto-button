@@ -5,7 +5,8 @@
         "outDir": "dist",
         "module": "ES2022",
         "declaration": false,
-        "sourceMap": true
+        "sourceMap": true,
+        "strict": true
     },
     "include": ["src/**/*"]
 }

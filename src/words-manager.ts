@@ -2,7 +2,7 @@ import { LineResult, LineResultState } from "./grid";
 import { ALL_WORDS } from "./words";
 
 const VOWEL_REGEX = /^[aeiouy]$/i;
-function isVowel(letter) {
+function isVowel(letter: string) {
   return VOWEL_REGEX.test(letter);
 }
 
@@ -19,7 +19,6 @@ export class WordsManager {
   }
 
   public feed(lineResult: LineResult): void {
-    // at some point count letters
     const currentNbrOfLetters: Record<string, { min: number; max: number | null; }> = {};
 
     lineResult.forEach((element, index) => {
@@ -34,7 +33,7 @@ export class WordsManager {
       if (this.word[index].letter) return;
       if (element.state === LineResultState["🟥"]) {
         this.word[index].letter = element.letter;
-        return
+        return;
       }
       this.word[index].notHere.add(element.letter);
     });
@@ -67,7 +66,7 @@ export class WordsManager {
       if (!Array.from(word).every((letter, index) => {
         if (this.word[index].letter && this.word[index].letter !== letter) return false;
         if (this.word[index].notHere.has(letter)) return false;
-        return true
+        return true;
       })) return false;
 
       const wordLetters = Array.from(word);
@@ -76,15 +75,15 @@ export class WordsManager {
         if (nbr < min) return false;
         if (max !== null && nbr > max) return false;
         return true;
-      })
+      });
     });
-    console.log('available words', this.availableWords);
+    console.log("remainings words", this.availableWords);
   }
 
   public findCandidate(): string {
     let maxDifferentVowels = 0;
     let maxDifferentConsonants = 0;
-    let bestWord = '';
+    let bestWord = "";
     for (const word of this.availableWords) {
       const vowels = Array.from(word).filter((letter) => isVowel(letter));
       const differentVowels = [...new Set(vowels)].length;

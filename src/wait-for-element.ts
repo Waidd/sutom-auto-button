@@ -1,3 +1,7 @@
+/**
+ * Wait for an HTML element to exist.
+ * Code from https://stackoverflow.com/a/61511955
+ */
 export function waitForElement(selector: string): Promise<Element> {
   return new Promise(resolve => {
     if (document.querySelector(selector)) {

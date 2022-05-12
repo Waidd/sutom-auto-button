@@ -1,4 +1,4 @@
-import { LineResult } from "./grid";
+import { LineResult, LineResultState } from "./grid";
 import { ALL_WORDS } from "./words";
 
 const VOWEL_REGEX = /^[aeiouy]$/i;
@@ -23,7 +23,7 @@ export class WordsManager {
     const currentNbrOfLetters: Record<string, { min: number; max: number | null; }> = {};
 
     lineResult.forEach((element, index) => {
-      if (element.state !== "ko") {
+      if (element.state !== LineResultState["🟦"]) {
         if (currentNbrOfLetters[element.letter]) {
           currentNbrOfLetters[element.letter].min++;
         } else {
@@ -32,7 +32,7 @@ export class WordsManager {
       }
 
       if (this.word[index].letter) return;
-      if (element.state === 'ok') {
+      if (element.state === LineResultState["🟥"]) {
         this.word[index].letter = element.letter;
         return
       }
@@ -40,7 +40,7 @@ export class WordsManager {
     });
 
     lineResult.forEach((element) => {
-      if (element.state !== 'ko') return;
+      if (element.state !== LineResultState["🟦"]) return;
       if (currentNbrOfLetters[element.letter]) {
         currentNbrOfLetters[element.letter].max = currentNbrOfLetters[element.letter].min;
       } else {

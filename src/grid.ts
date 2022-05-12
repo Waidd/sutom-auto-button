@@ -1,6 +1,12 @@
+export enum LineResultState {
+  ["🟥"] = "🟥",
+  ["🟦"] = "🟦",
+  ["🟡"] = "🟡",
+}
+
 export type LineResult = Array<{
   letter: string;
-  state: 'ok' | 'not-here' | 'ko';
+  state: LineResultState;
 }>;
 
 export class Grid {
@@ -27,9 +33,9 @@ export class Grid {
     }));
   }
 
-  private getLetterState(letterElement: Element): 'ok' | 'not-here' | 'ko' {
-    if (letterElement.classList.contains('bien-place')) return 'ok';
-    if (letterElement.classList.contains('mal-place')) return 'not-here';
-    return 'ko';
+  private getLetterState(letterElement: Element): LineResultState {
+    if (letterElement.classList.contains('bien-place')) return LineResultState["🟥"];
+    if (letterElement.classList.contains('mal-place')) return LineResultState["🟡"];
+    return LineResultState["🟦"];
   }
 }

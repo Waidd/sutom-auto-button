@@ -5,6 +5,7 @@
   "scripts": {
     "watch": "tsc --watch --noEmit",
     "build": "rollup -c",
+    "lint": "eslint src --ext .ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

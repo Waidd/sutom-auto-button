@@ -1,52 +1,39 @@
 import { Grid } from "./grid";
 import { Keyboard } from "./keyboard";
-import { ALL_WORDS } from "./mots";
-import { waitForElement } from "./waitForElement";
+import { waitForElement } from "./wait-for-element";
+import { WordsManager } from "./words-manager";
 
-console.log('hello sutom');
+console.log('nerfing sutom...');
+class AutoButton {
+  private keyboard: Keyboard;
+  private grid: Grid;
+  private wordsManager: WordsManager;
+  private currentLine = 0;
 
-const VOWEL_REGEX = /^[aeiouy]$/i;
-function isVowel(letter) {
-  return VOWEL_REGEX.test(letter);
-}
-
-class WordsManager {
-  private availableWords: string[];
-
-  constructor(firstLetter: string, size: number) {
-    this.availableWords = ALL_WORDS.filter((word) => word.length === size && word[0].toUpperCase() === firstLetter);
+  public constructor() {
+    this.keyboard = new Keyboard();
+    this.grid = new Grid();
+    this.wordsManager = new WordsManager(this.grid.firstLetter, this.grid.size);
   }
 
-  public findCandidate(): string {
-    let maxDifferentVowels = 0;
-    let maxDifferentConsonants = 0;
-    let bestWord = '';
-    console.log(this.availableWords.length);
-    for (const word of this.availableWords) {
-      const vowels = Array.from(word).filter((letter) => isVowel(letter));
-      const differentVowels = [...new Set(vowels)].length;
-      if (differentVowels < maxDifferentVowels) continue;
-      const consonants = Array.from(word).filter((letter) => !isVowel(letter));
-      const differentConsonants = [...new Set(consonants)].length;
-      if (differentVowels <= maxDifferentVowels && differentConsonants < maxDifferentConsonants) continue;
-      bestWord = word;
-      maxDifferentVowels = differentVowels;
-      maxDifferentConsonants = differentConsonants;
+  public async auto(): Promise<void> {
+    try {
+      const updatedCurrentLine = this.grid.getCurrentLine();
+      if (updatedCurrentLine === 6) {
+        console.log('nothing to do anymore');
+        return;
+      }
+      for (let i = this.currentLine; i < updatedCurrentLine; i++) {
+        const lineResult = this.grid.getLineResult(i);
+        this.wordsManager.feed(lineResult);
+      }
+      this.wordsManager.filterAvailablesWords();
+      const bestWord = this.wordsManager.findCandidate();
+      this.currentLine = updatedCurrentLine;
+      await this.keyboard.enterWord(bestWord);
+    } catch (up) {
+      console.error(up);
     }
-    return bestWord;
-  }
-}
-
-async function auto(): Promise<void> {
-  try {
-    const keyboard = new Keyboard();
-    const grid = new Grid();
-    const wordsManager = new WordsManager(grid.firstLetter, grid.size);
-    const bestWord = wordsManager.findCandidate();
-    console.log('best world', bestWord);
-    await keyboard.enterWord(bestWord);
-  } catch (up) {
-    console.error(up);
   }
 }
 
@@ -55,7 +42,8 @@ function addAutoButton(): void {
   const autoButton = document.createElement('div');
   autoButton.classList.add('input-lettre')
   autoButton.innerText = 'AUTO';
-  autoButton.onclick = auto;
+  const autoButtonHandler = new AutoButton();
+  autoButton.onclick = () => autoButtonHandler.auto();
   inputLine3.removeChild(inputLine3.children[0]);
   inputLine3.appendChild(autoButton);
 }

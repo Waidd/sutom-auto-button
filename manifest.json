@@ -1,0 +1,23 @@
+{
+    "manifest_version": 2,
+    "name": "Sutom solver",
+    "version": "0.1",
+    "description": "Solve sutom",
+    "icons": {
+        "48": "favicon.svg"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://sutom.nocle.fr/*"
+            ],
+            "js": [
+                "mots.js",
+                "waitForElm.js",
+                "keyboard.js",
+                "grille.js",
+                "sutom.js"
+            ]
+        }
+    ]
+}

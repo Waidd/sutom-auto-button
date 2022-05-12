@@ -1,0 +1,25 @@
+{
+  "name": "sutom-auto-button",
+  "version": "0.0.1",
+  "description": "Little sutom solver project because I'm bored ",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Waidd/sutom-auto-button.git"
+  },
+  "author": "Thomas Cholley <cholley.t@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Waidd/sutom-auto-button/issues"
+  },
+  "homepage": "https://github.com/Waidd/sutom-auto-button#readme",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.23.0",
+    "@typescript-eslint/parser": "^5.23.0",
+    "eslint": "^8.15.0",
+    "typescript": "^4.6.4"
+  }
+}

@@ -4,7 +4,7 @@
     "version": "0.1",
     "description": "Solve sutom",
     "icons": {
-        "48": "favicon.svg"
+        "48": "assets/favicon.svg"
     },
     "content_scripts": [
         {
@@ -12,11 +12,11 @@
                 "*://sutom.nocle.fr/*"
             ],
             "js": [
-                "mots.js",
-                "waitForElm.js",
-                "keyboard.js",
-                "grille.js",
-                "sutom.js"
+                "dist/grid.js",
+                "dist/keyboard.js",
+                "dist/mots.js",
+                "dist/waitForElement.js",
+                "dist/sutom.js"
             ]
         }
     ]

@@ -12,11 +12,7 @@
                 "*://sutom.nocle.fr/*"
             ],
             "js": [
-                "dist/grid.js",
-                "dist/keyboard.js",
-                "dist/mots.js",
-                "dist/waitForElement.js",
-                "dist/sutom.js"
+                "dist/bundle.js"
             ]
         }
     ]
